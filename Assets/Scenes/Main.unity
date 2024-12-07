@@ -590,7 +590,7 @@ Transform:
   m_GameObject: {fileID: 632016882}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.5, y: 0, z: 0}
+  m_LocalPosition: {x: -8.53, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -689,9 +689,9 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0
-  m_GravityScale: 2
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -715,7 +715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b628077f9296f6240ac3fbf4ea6eafe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpVelocity: 1
+  jumpVelocity: 0.7
   groundCheckDistance: 0.1
   groundLayerMask:
     serializedVersion: 2
@@ -1246,7 +1246,7 @@ Transform:
   m_GameObject: {fileID: 1047354506}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.5, y: 0, z: 0}
+  m_LocalPosition: {x: 4.99, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1271,11 +1271,16 @@ MonoBehaviour:
     x: 0
     y: 2
     z: 0
-  spawnSize: 1.2
+  spawnSize: 2
   spawnSizeMean: 0.5
   sideBalance: 4
   spawnLayer: Obstacle
   obstaclePrefab: {fileID: 444823138257878674, guid: d9e6dffab2dc3ef4dbf678bf85c63c93, type: 3}
+  spawnAccumulator: 0
+  nextSpawnIn: 0
+  sideBalanceAcc: 0
+  currSide: 0
+  targetSpawnSize: 0
 --- !u!1 &1213650991
 GameObject:
   m_ObjectHideFlags: 0
