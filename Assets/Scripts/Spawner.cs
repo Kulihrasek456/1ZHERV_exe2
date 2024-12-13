@@ -86,7 +86,7 @@ public class Spawner : MonoBehaviour
                 targetSpawnSize =   Mathf.Clamp(RandomNormal(spawnSizeMean, spawnSize),spawnSize-spawnSizeMean,spawnSize+spawnSizeMean);
                 float targetSpawnSizeWeight = Mathf.Clamp((targetSpawnSize-spawnSize)/spawnSizeMean,-0.5f,1); // normalized value between -0.5 and 1 
                 nextSpawnIn = Mathf.Clamp(RandomNormal(spawnFrequencyMean, spawnFrequencyStd),spawnFrequencyStd-spawnFrequencyMean,spawnFrequencyStd+spawnFrequencyMean);
-                nextSpawnIn = nextSpawnIn+ (targetSpawnSizeWeight*spawnFrequencyMean);
+                nextSpawnIn = nextSpawnIn + (targetSpawnSizeWeight*spawnFrequencyMean);
                 
                 Debug.Log("new spawn with size: " + targetSpawnSize + "("+targetSpawnSizeWeight+")" + "   next in: "+nextSpawnIn);
 
@@ -143,6 +143,7 @@ public class Spawner : MonoBehaviour
             if (child.gameObject.layer == obstacleLayer) 
             { Destroy(child.gameObject); }
         }
+
     }
     
     /// <summary>
