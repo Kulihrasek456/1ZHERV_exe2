@@ -1246,7 +1246,7 @@ Transform:
   m_GameObject: {fileID: 1047354506}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.99, y: 0, z: 0}
+  m_LocalPosition: {x: 8.01, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1265,22 +1265,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnObstacles: 1
-  spawnFrequencyMean: 0.5
-  spawnFrequencyStd: 2
+  spawnFrequencyMean: 1
+  spawnFrequencyStd: 0.5
   spawnOffset:
     x: 0
-    y: 2
+    y: 2.55
     z: 0
-  spawnSize: 2
-  spawnSizeMean: 0.5
-  sideBalance: 4
+  spawnSize: 1.1
   spawnLayer: Obstacle
   obstaclePrefab: {fileID: 444823138257878674, guid: d9e6dffab2dc3ef4dbf678bf85c63c93, type: 3}
-  spawnAccumulator: 0
-  nextSpawnIn: 0
-  sideBalanceAcc: 0
-  currSide: 0
-  targetSpawnSize: 0
 --- !u!1 &1213650991
 GameObject:
   m_ObjectHideFlags: 0

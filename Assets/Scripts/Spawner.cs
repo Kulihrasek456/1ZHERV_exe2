@@ -18,29 +18,22 @@ public class Spawner : MonoBehaviour
     /// <summary>
     /// Mean frequency of spawning as n per second.
     /// </summary>
-    public float spawnFrequencyMean = 0.5f;
+    public float spawnFrequencyMean = 1.0f;
     
     /// <summary>
     /// Standard deviation of the frequency of spawning as n per second.
     /// </summary>
-    public float spawnFrequencyStd = 2f;
+    public float spawnFrequencyStd = 0.5f;
     
     /// <summary>
     /// Position offset of the spawned obstacles.
     /// </summary>
-    public float3 spawnOffset = new float3(0.0f, 2f, 0.0f);
+    public float3 spawnOffset = new float3(0.0f, 0.0f, 0.0f);
     
     /// <summary>
     /// Size of the spawned obstacles.
     /// </summary>
-    public float spawnSize = 1.2f;
-
-    /// <summary>
-    /// Mean of the randomned size of spawned obstacles.
-    /// </summary>
-    public float spawnSizeMean = 0.5f;
-    
-    public float sideBalance = 4f;
+    public float spawnSize = 1.0f;
     
     /// <summary>
     /// Layer used for the spawned obstacles.
@@ -55,15 +48,12 @@ public class Spawner : MonoBehaviour
     /// <summary>
     /// Accumulated time since the last spawn in seconds.
     /// </summary>
-    public float spawnAccumulator = 0.0f;
+    private float spawnAccumulator = 0.0f;
 
     /// <summary>
     /// Number of seconds since the last spawn.
     /// </summary>
-    public float nextSpawnIn = 0.0f;
-    public float sideBalanceAcc = 0f;
-    public bool currSide = false;
-    public float targetSpawnSize = 0;
+    private float nextSpawnIn = 0.0f;
 
     /// <summary>
     /// Called before the first frame update.
@@ -81,27 +71,11 @@ public class Spawner : MonoBehaviour
             spawnAccumulator += Time.deltaTime;
             if (spawnAccumulator >= nextSpawnIn)
             { // Spawn at most one obstacle per frame.
-                
                 spawnAccumulator -= nextSpawnIn;
-                targetSpawnSize =   Mathf.Clamp(RandomNormal(spawnSizeMean, spawnSize),spawnSize-spawnSizeMean,spawnSize+spawnSizeMean);
-                float targetSpawnSizeWeight = Mathf.Clamp((targetSpawnSize-spawnSize)/spawnSizeMean,-0.5f,1); // normalized value between -0.5 and 1 
-                nextSpawnIn = Mathf.Clamp(RandomNormal(spawnFrequencyMean, spawnFrequencyStd),spawnFrequencyStd-spawnFrequencyMean,spawnFrequencyStd+spawnFrequencyMean);
-                nextSpawnIn = nextSpawnIn + (targetSpawnSizeWeight*spawnFrequencyMean);
+                nextSpawnIn = RandomNormal(spawnFrequencyMean, spawnFrequencyStd);
                 
-                Debug.Log("new spawn with size: " + targetSpawnSize + "("+targetSpawnSizeWeight+")" + "   next in: "+nextSpawnIn);
-
                 SpawnObstacle();
             }
-        }
-    }
-
-    public void switchSide()
-    {
-        sideBalanceAcc+=targetSpawnSize;
-        if(sideBalanceAcc > sideBalance){
-            targetSpawnSize =targetSpawnSize-(sideBalanceAcc-sideBalance);
-            sideBalanceAcc = 0;
-            currSide = !currSide;
         }
     }
 
@@ -113,19 +87,15 @@ public class Spawner : MonoBehaviour
         // Spawn the obstacle.
         var obstacle = Instantiate(obstaclePrefab, transform);
 
-        var calcSpawnOffset = spawnOffset + targetSpawnSize/2;
-
-        switchSide();
-
         // Move it to the target location.
-        var spawnDown = currSide;
+        var spawnDown = RandomBool();
         obstacle.transform.position += (Vector3)(spawnDown ? 
-            calcSpawnOffset + (1.0f - targetSpawnSize) / 2.0f : 
-            -calcSpawnOffset - (1.0f - targetSpawnSize) / 2.0f
+            spawnOffset + (1.0f - spawnSize) / 2.0f : 
+            -spawnOffset - (1.0f - spawnSize) / 2.0f
         );
         
         // Scale it.
-        obstacle.transform.localScale = new Vector3(targetSpawnSize, targetSpawnSize, targetSpawnSize);
+        obstacle.transform.localScale = new Vector3(spawnSize, spawnSize, spawnSize);
         
         // Move the obstacle into the correct layer.
         obstacle.layer = LayerMask.NameToLayer(spawnLayer);
@@ -143,7 +113,6 @@ public class Spawner : MonoBehaviour
             if (child.gameObject.layer == obstacleLayer) 
             { Destroy(child.gameObject); }
         }
-
     }
     
     /// <summary>
